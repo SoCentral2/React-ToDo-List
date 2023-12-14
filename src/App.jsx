@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-key */
 import { useState } from 'react';
-import React from 'react';
 import './styles.css';
 
 
@@ -10,6 +8,7 @@ export default function App() {
   // NB: the first array entry of a useState object (newItem here) cannot be directly changed, the second entry (setNewItem here) must be used.
   const [newItem, setNewItem] = useState("");
   const [todos, setTodos] = useState([]);
+
   function handleSubmit(e) {
     e.preventDefault() //This will prevent the page refreshing
   
@@ -23,22 +22,17 @@ export default function App() {
         }
       ]
     })
-    setNewItem("");
+    setNewItem("")
   }
 
   function toggleTodo(id, completed) {
     setTodos(currentTodos => {
       return currentTodos.map(todo => {
         if (todo.id === id) {
-          return { ...todo, completed}
+          return { ...todo, completed }
         }
+        return todo;
       })
-    })
-  }
-
-  function deleteTodo(id) {
-    setTodos(currentTodos => {
-      return currentTodos.filter(todo => todo.id !== id)
     })
   }
 
@@ -58,20 +52,16 @@ export default function App() {
       </form>
       <h1 className='header'>Todo List</h1>
       <ul className='list'> 
-        
+
         {todos.map(todo => {
           return (
-            //without the 'key=' below, "App.jsx:42 Warning: Each child in a list should have a unique "key" prop."
-            <li key={todo.id}> 
+            <li key={todo.id}>
             <label>
-              <input 
-                type='checkbox' 
-                checked={todo.completed}
-                onChange={e => toggleTodo(todo.id, e.target.checked)} 
-              />
-              {todo.title}
+              <input type='checkbox' 
+                onChange={e => toggleTodo(todo.id, e.target.checked)}/>
+                {todo.title}
             </label>
-            <button onClick={() => deleteTodo(todo.id)} className='btn btn-danger'>Delete</button>
+            <button className='btn btn-danger'>Delete</button>
           </li>
           )
         })}
